@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import './styles/style.css'
 
@@ -13,15 +13,26 @@ function App() {
   // this url API only needs city location
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${leKey}`
 
+
+  const urlDefault = `https://api.openweathermap.org/data/2.5/weather?q=Tijuana&appid=${leKey}`
   // link de prueba
   // https://api.openweathermap.org/data/2.5/weather?q=tijuana&appid=96c7d097bd53c6785a3219aa90cf99ea
 
-  const searchLocation = (event) => {
 
+  useEffect(()=>{
+    axios.get(urlDefault).then((response) => {
+      setData(response.data)
+      //console.log(response.data)
+      
+    })
+  },[])
+
+
+  const searchLocation = (event) => {
     if (event.key === 'Enter') {
       axios.get(url).then((response) => {
         setData(response.data)
-        console.log(response.data)
+        //console.log(response.data)
 
       })
       setLocation('')
